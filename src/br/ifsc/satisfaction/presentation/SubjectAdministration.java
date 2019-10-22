@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
@@ -44,7 +46,7 @@ public class SubjectAdministration {
 	}
 
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("Administrativo");
 		frame.setBounds(100, 100, 760, 300);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,6 +92,7 @@ public class SubjectAdministration {
 		table.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		table.setBackground(Color.GRAY);
 		scrollPane.setViewportView(table);
+		table.setComponentPopupMenu(getPopUpMenu());
 
 		JButton btnAtualizar = new JButton("Atualizar");
 		springLayout.putConstraint(SpringLayout.WEST, btnAtualizar, 6, SpringLayout.EAST, scrollPane);
@@ -121,5 +124,23 @@ public class SubjectAdministration {
 	
 	public void selectRowOptionPanel() {
 		JOptionPane.showMessageDialog(frame, "Selecione uma palestra!");
+	}
+	
+	public JPopupMenu getPopUpMenu() {
+		JPopupMenu popUp = new JPopupMenu();
+		JMenuItem item = new JMenuItem("Deletar");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() >= 0) {
+					GenericRepository.delete(subjects.get(table.getSelectedRow()));
+					populateList();
+				}else {
+					selectRowOptionPanel();
+				}	
+			}
+		});
+		popUp.add(item);
+		return popUp;
 	}
 }

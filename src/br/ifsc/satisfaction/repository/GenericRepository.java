@@ -28,4 +28,12 @@ public class GenericRepository implements FormEntity{
 		return list;
 	}
 	
+	public static void delete(FormEntity entity) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.delete(entity);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
 }

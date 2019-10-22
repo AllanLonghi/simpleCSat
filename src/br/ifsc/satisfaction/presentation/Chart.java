@@ -35,7 +35,7 @@ public class Chart extends JFrame {
 	private void init() {
 		getValues();
 		PieDataset dataset = createDataset();
-		chart = ChartFactory.createPieChart("Pie Chart Example", dataset, true, true, false);
+		chart = ChartFactory.createPieChart("Palestra: " + subject.getName(), dataset, true, true, false);
 		PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} : ({2})",
 				new DecimalFormat("0"), new DecimalFormat("0%"));
 		((PiePlot) chart.getPlot()).setLabelGenerator(labelGenerator);
